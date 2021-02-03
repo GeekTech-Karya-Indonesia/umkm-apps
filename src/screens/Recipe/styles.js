@@ -65,6 +65,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 5,
   },
+  textIcon: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  textIconSmall: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
   category: {
     fontSize: 14,
     fontWeight: 'bold',

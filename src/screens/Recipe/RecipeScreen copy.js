@@ -16,7 +16,7 @@ import BackButton from '../../components/BackButton/BackButton';
 import ViewIngredientsButton from '../../components/ViewIngredientsButton/ViewIngredientsButton';
 import { Container, Header, Content, Card, CardItem, Right, Left, Footer, FooterTab, Button, Icon, Body} from 'native-base';
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import MapView from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 const { width: viewportWidth } = Dimensions.get('window');
 import { AntDesign, Entypo } from '@expo/vector-icons';
@@ -65,13 +65,11 @@ export default class RecipeScreen extends React.Component {
 
     const { width, height } = Dimensions.get('window');
     const ASPECT_RATIO = width / height;
-    const LATITUDE = 37.771707;
-    const LONGITUDE = -122.4053769;
+    const LATITUDE = -6.2477257;
+    const LONGITUDE = 107.0049049;
     const LATITUDE_DELTA = 0.0922;
     const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-    const origin = {latitude: 37.3318456, longitude: -122.0296002};
-    const destination = {latitude: 37.771707, longitude: -122.4053769};
-    const GOOGLE_MAPS_APIKEY = 'AIzaSyD5TRGCHCxtP4IiRCE1lkM3-N22cIzIYl4';
+    const GOOGLE_MAPS_APIKEY = 'AIzaSyDslRfa7R_OkMMM8tpCjxAPHM4P5mmBlqA'
     return (
       <ScrollView style={styles.container}>
         <View style={styles.container}>
@@ -157,18 +155,55 @@ export default class RecipeScreen extends React.Component {
         <View style={styles.infoRecipeContainer}>  
           <View style={styles.infoContainer}>
              {/* <MapView style={styles.map} /> */}
-             <MapView style={styles.map} initialRegion={{
+             {/* <MapView style={styles.map} initialRegion={{
                 latitude: LATITUDE,
                 longitude: LONGITUDE,
                 latitudeDelta: LATITUDE_DELTA,
                 longitudeDelta: LONGITUDE_DELTA,
               }}>
-              <MapViewDirections
-                origin={origin}
-                destination={destination}
+                <Marker 
+                title="Your Locations"
+                coordinate={{
+                   latitude: LATITUDE,
+                   longitude: LONGITUDE,
+                }}/>
+                <Marker 
+                  title="Merchant Locations"
+                  coordinate={{
+                    latitude: -6.2567257,
+                    longitude: LONGITUDE,
+                  }}/>
+            </MapView> */}
+
+            <MapView style={styles.map} 
+                showsUserLocation //to show user current location when given access
+                loadingEnabled //to show loading while map loading
+                initialRegion={{
+                  latitude: LATITUDE,
+                  longitude: LONGITUDE,
+                  latitudeDelta: LATITUDE_DELTA,
+                  longitudeDelta: LONGITUDE_DELTA,
+                }}>
+                      <Polyline
+                      coordinates={[{ latitude: -6.4477257, longitude: 107.0049049}, { latitude: -2.4477257, longitude: 107.4049049 },]}
+                    strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+                  
+                    strokeWidth={6}
+      />
+                </MapView>
+              {/* <MapViewDirections
+                origin={{
+                   latitude: LATITUDE,
+                   longitude: LONGITUDE,
+                }}
+                destination={{
+                  latitude: -6.2567257,
+                  longitude: LONGITUDE,
+                  }}
                 apikey={GOOGLE_MAPS_APIKEY}
-              />
-            </MapView>
+              /> */}
+{/*               
+            </MapView> */}
           </View>
         </View>
         <View style={styles.infoRecipeContainer}>  
