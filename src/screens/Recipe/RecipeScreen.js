@@ -271,7 +271,9 @@ export default class RecipeScreen extends React.Component {
                   </Right>
                 </CardItem>
                 <CardItem>
-                  <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
+                  <Text style={styles.infoDescriptionRecipe}>
+                    {item.description}
+                  </Text>
                 </CardItem>
             </Card>
           </Content>
