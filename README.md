@@ -1,6 +1,6 @@
 <!-- Banner Image -->
 
-[![Expo](/style/header.png)](https://expo.io)
+[![umkm-apps](/style/header.png)](https://expo.io)
 
 <p align="center">
  
