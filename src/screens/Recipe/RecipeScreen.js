@@ -14,21 +14,20 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { getIngredientName, getCategoryName, getCategoryById } from '../../data/MockDataAPI';
 import BackButton from '../../components/BackButton/BackButton';
 import ViewIngredientsButton from '../../components/ViewIngredientsButton/ViewIngredientsButton';
-import { Container, Header, Content, Card, CardItem, Right, Left, Footer, FooterTab, Button, Icon, Body} from 'native-base';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { Container, Content, Card, CardItem, Right, Left, Body} from 'native-base';
+import { Rating } from 'react-native-ratings';
 import MapView, { Marker, Polyline } from 'react-native-maps';
-import MapViewDirections from 'react-native-maps-directions';
 const { width: viewportWidth } = Dimensions.get('window');
 import { AntDesign, Entypo, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions'
 import polyline from '@mapbox/polyline'
 import * as Location from 'expo-location';
 const locations = require('./location.json')
-const { width, height } = Dimensions.get('screen')
 
 export default class RecipeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
+      headerTitle: null,
       headerTransparent: 'true',
       headerLeft: (
         <BackButton
@@ -76,7 +75,6 @@ export default class RecipeScreen extends React.Component {
     const hasStartAndEnd = latitude !== null && desLatitude !== null
 
     if (hasStartAndEnd) {
-      console.log('IS COORDS', hasStartAndEnd)
       const concatStart = `${latitude},${longitude}`
       const concatEnd = `${desLatitude},${desLongitude}`
       this.getDirections(concatStart, concatEnd)
@@ -88,8 +86,8 @@ export default class RecipeScreen extends React.Component {
       const lt = -6.4477257;
       const long = 107.0049049;
       const desLoc = `${lt},${long}`
-      // const GAPIS = 'AIzaSyDslRfa7R_OkMMM8tpCjxAPHM4P5mmBlqA'
-      const GAPIS = 'AIzaSyDslRfa7Rasda_OkMMM8tpCjasdasdsadadxAPHM4P5mmBlqA'
+      const GAPIS = 'AIzaSyDslRfa7R_OkMMM8tpCjxAPHM4P5mmBlqA'
+      // const GAPIS = 'AIzaSyDslRfa7Rasda_OkMMM8tpCjasdasdsadadxAPHM4P5mmBlqA'
       const resp = await fetch(`https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${desLoc}&key=${GAPIS}`)
       const respJson = await resp.json();
       const response = respJson.routes[0]
@@ -158,7 +156,7 @@ export default class RecipeScreen extends React.Component {
       <Polyline
         coordinates={coords}
         strokeColor="#6a0dad" // fallback for when `strokeColors` is not supported by the map-provider
-        strokeWidth={6}
+        strokeWidth={10}
       />
     </MapView>)
   }
