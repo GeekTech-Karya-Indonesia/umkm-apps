@@ -14,11 +14,12 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { getIngredientName, getCategoryName, getCategoryById } from '../../data/MockDataAPI';
 import BackButton from '../../components/BackButton/BackButton';
 import ViewIngredientsButton from '../../components/ViewIngredientsButton/ViewIngredientsButton';
-import { Container, Content, Card, CardItem, Right, Left, Body} from 'native-base';
+import { Container, Content, Card, CardItem, Right, Left, Body, Thumbnail} from 'native-base';
 import { Rating } from 'react-native-ratings';
+import { Accordion, Block } from 'galio-framework';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 const { width: viewportWidth } = Dimensions.get('window');
-import { AntDesign, Entypo, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, Entypo, Octicons, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions'
 import polyline from '@mapbox/polyline'
 import * as Location from 'expo-location';
@@ -46,7 +47,8 @@ export default class RecipeScreen extends React.Component {
       active: true,
       latitude: null,
       longitude: null,
-      locations: locations
+      locations: locations,
+      description: []
     };
   }
 
@@ -55,13 +57,14 @@ export default class RecipeScreen extends React.Component {
     if (status !== 'granted') {
       const response = await Permissions.askAsync(Permissions.LOCATION)
     }
-    console.log('STATUS', status)
     await Location.getCurrentPositionAsync({}).then(({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }, this.mergeCoords))
     const { locations: [ sampleLocation ] } = this.state
     this.setState({
       desLatitude: sampleLocation.coords.latitude,
       desLongitude: sampleLocation.coords.longitude
     }, this.mergeCoords)
+
+    this.descriptionAcordian()
   }
 
   mergeCoords = () => {
@@ -132,13 +135,10 @@ export default class RecipeScreen extends React.Component {
 
   renderMap = () => {
     const { 
-      activeSlide, 
-      time,
       coords,
-      distance,
       latitude,
-      longitude,
-      destination } = this.state;
+      longitude
+    } = this.state;
     return (<MapView
       showsUserLocation
       style={styles.map} 
@@ -161,26 +161,32 @@ export default class RecipeScreen extends React.Component {
     </MapView>)
   }
 
+  descriptionAcordian = (data) => {
+    const { navigation } = this.props;
+    const item = navigation.getParam('item');
+    console.log(item)
+    this.setState({
+      description: [
+        { title: "Deskripsi", content: item.description, 
+       },
+        { 
+          title: "Spesifikasi", content: "Berat: 1kg \n Kondisi: Baru \n Pemesanan Min : 1 \n Kategori: Smoothies \n Penjual: Andara",
+      }]
+    })
+  }
+
   render() {
     const { 
       activeSlide, 
       time,
       coords,
       distance,
-      latitude,
-      longitude,
-      destination } = this.state;
-
+      latitude
+    } = this.state;
     const { navigation } = this.props;
     const item = navigation.getParam('item');
     const category = getCategoryById(item.categoryId);
     const title = getCategoryName(category.id);
-
-    const { width, height } = Dimensions.get('window');
-    const ASPECT_RATIO = width / height;
-    const LATITUDE = -6.2477257;
-    const LONGITUDE = 107.0049049;
-    const LATITUDE_DELTA = 0.0922;
     return (
       <ScrollView style={styles.container}>
         <View style={styles.container}>
@@ -206,7 +212,6 @@ export default class RecipeScreen extends React.Component {
                     autoplayInterval={3000}
                     onSnapToItem={index => this.setState({ activeSlide: index })}
                   />
-                  
                   <Pagination
                     dotsLength={item.photosArray.length}
                     activeDotIndex={activeSlide}
@@ -236,10 +241,11 @@ export default class RecipeScreen extends React.Component {
                 <Left>
                   <Text style={styles.textIcon}><AntDesign name="clockcircleo" size={24} color="#6a0dad" /> {time}</Text>
                 </Left>
+                </CardItem>
+                <CardItem>
                 <Left>
                   <Text style={styles.textIcon}><AntDesign name="car" size={24} color="#6a0dad" /> {distance}</Text>
                 </Left>
-                
                 </CardItem>
                 <CardItem>
                   <Left>
@@ -248,35 +254,57 @@ export default class RecipeScreen extends React.Component {
                 </CardItem>
                 <CardItem>
                   <Left>
-                    <TouchableHighlight onPress={() => navigation.navigate('RecipesList', { category, title })}>
-                      <Text style={styles.category}>{getCategoryName(item.categoryId).toUpperCase()}</Text>
-                    </TouchableHighlight>
+                    <Thumbnail source={{uri: "http://i.pravatar.cc/100?id=skater" }} />
+                    <Text style={styles.textIconSmall}>
+                      UMKM Kota Bekasi
+                    </Text>
                   </Left>
                   <Body>
-                    <Rating
-                      type='heart'
-                      ratingCount={5}
-                      startingValue={10}
-                      imageSize={20}
-                      showRating
-                      readonly={true}
-                    />    
                   </Body>
-                  <Right>
-                    <Text style={styles.textIconSmall}><MaterialCommunityIcons name="crown" size={16} color="orange" /> UMKM Binaan</Text>
-                    <Text style={styles.textIconSmall}><Octicons name="verified" size={16} color="purple" /> Telah diverifikasi</Text>
-                    <Text style={styles.textIconSmall}><Octicons name="unverified" size={16} color="black" /> Belum diverifikasi</Text>
-                  </Right>
+                    <Body>
+                      <Rating
+                        type='heart'
+                        ratingCount={5}
+                        startingValue={10}
+                        imageSize={20}
+                        showRating
+                        readonly={true}
+                      />    
+                  </Body>
                 </CardItem>
                 <CardItem>
-                  <Text style={styles.infoDescriptionRecipe}>
-                  {item.description}
-                  </Text>
+                  <Left>
+                    <Text style={styles.textIconSmall}><MaterialCommunityIcons name="crown" size={16} color="orange" /> UMKM Binaan</Text>
+                  </Left>
+                  <Left>
+                    <Text style={styles.textIconSmall}><Octicons name="verified" size={16} color="green" /> Telah diverifikasi</Text>
+                 </Left>
+                  <Left>
+                    <Text style={styles.textIconSmall}><Octicons name="unverified" size={16} color="black" /> Belum diverifikasi</Text>
+                 </Left>
                 </CardItem>
             </Card>
           </Content>
         </Container>
-       
+        <View style={styles.infoRecipeContainer}>  
+          <View style={styles.infoContainer}>
+              <Text>Lihat Kategori Serupa: </Text>
+              <TouchableHighlight onPress={() => navigation.navigate('RecipesList', { category, title })}>
+                <Text style={styles.category}>{getCategoryName(item.categoryId).toUpperCase()}</Text>
+              </TouchableHighlight>
+          </View>
+        </View>
+        <View style={styles.infoRecipeContainer}>  
+          <View style={styles.infoContainer}>
+            <Accordion dataArray={this.state.description}
+            icon={
+              <AntDesign name="plus" size={16} color="purple" />
+            } 
+            expandedIcon={
+              <AntDesign name="minus" size={16} color="purple" />
+            }/>
+          </View>
+        </View>
         <View style={styles.infoRecipeContainer}>  
           <View style={styles.infoContainer}>
           {
