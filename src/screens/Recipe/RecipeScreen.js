@@ -17,7 +17,7 @@ import ViewIngredientsButton from '../../components/ViewIngredientsButton/ViewIn
 import { Container, Content, Card, CardItem, Right, Left, Body, Thumbnail} from 'native-base';
 import { Rating } from 'react-native-ratings';
 import { Accordion, Block } from 'galio-framework';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 const { width: viewportWidth } = Dimensions.get('window');
 import { AntDesign, Entypo, Octicons, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions'
@@ -140,6 +140,7 @@ export default class RecipeScreen extends React.Component {
       longitude
     } = this.state;
     return (<MapView
+      provide={PROVIDER_GOOGLE}
       showsUserLocation
       style={styles.map} 
       initialRegion={{
@@ -164,7 +165,6 @@ export default class RecipeScreen extends React.Component {
   descriptionAcordian = (data) => {
     const { navigation } = this.props;
     const item = navigation.getParam('item');
-    console.log(item)
     this.setState({
       description: [
         { title: "Deskripsi", content: item.description, 

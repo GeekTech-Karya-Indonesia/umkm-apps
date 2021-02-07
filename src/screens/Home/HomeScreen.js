@@ -6,6 +6,7 @@ import MenuImage from '../../components/MenuImage/MenuImage';
 import MenuHeader from '../../components/Header/MenuHeader';
 import DrawerActions from 'react-navigation';
 import { getCategoryName } from '../../data/MockDataAPI';
+import { ListItem, SearchBar, Header } from 'react-native-elements';
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
@@ -24,10 +25,17 @@ export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      search: '',
+    }
   }
 
   onPressRecipe = item => {
     this.props.navigation.navigate('Recipe', { item });
+  };
+
+  updateSearch = (search) => {
+    this.setState({ search });
   };
 
   renderRecipes = ({ item }) => (
@@ -41,8 +49,29 @@ export default class HomeScreen extends React.Component {
   );
 
   render() {
+    const { search } = this.state;
     return (
       <View>
+        <SearchBar
+          containerStyle={{
+            marginTop: 30,
+            backgroundColor: 'transparent',
+            borderBottomColor: 'transparent',
+            borderTopColor: 'transparent',
+          }}
+          inputContainerStyle={{
+            backgroundColor: '#EDEDED'
+          }}
+          inputStyle={{
+            backgroundColor: '#EDEDED',
+            borderRadius: 10,
+            color: 'black'
+          }}
+          placeholder="Type Here..."
+          round
+          onChangeText={this.updateSearch}
+          value={search}
+        />
         <FlatList
           vertical
           showsVerticalScrollIndicator={false}

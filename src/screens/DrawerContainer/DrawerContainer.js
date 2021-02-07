@@ -3,6 +3,7 @@ import { TouchableWithoutFeedback, ScrollView, StyleSheet, Image, View } from "r
 import PropTypes from 'prop-types';
 import styles from './styles';
 import MenuButton from '../../components/MenuButton/MenuButton';
+import MenuIcon from '../../components/MenuIcon/MenuIcon';
 import { useSafeArea } from "react-native-safe-area-context";
 import { Accordion, Block } from 'galio-framework';
 
@@ -39,57 +40,25 @@ export default class DrawerContainer extends React.Component {
               navigation.closeDrawer();
             }}
           />
-          <MenuButton
-            title="CATEGORIES"
-            source={require('../../../assets/icons/category.png')}
+          <MenuIcon
+            title="Categories"
+            source="login"
             onPress={() => {
-              navigation.navigate('Categories');
+              navigation.navigate('Search');
               navigation.closeDrawer();
             }}
           />
-          <MenuButton
-            title="CATEGORIES"
-            source={require('../../../assets/icons/category.png')}
+          <MenuIcon
+            title="Masuk"
+            source="login"
             onPress={() => {
-              navigation.navigate('Categories');
+              navigation.navigate('Search');
               navigation.closeDrawer();
             }}
           />
-          <MenuButton
-            title="CATEGORIES"
-            source={require('../../../assets/icons/category.png')}
-            onPress={() => {
-              navigation.navigate('Categories');
-              navigation.closeDrawer();
-            }}
-          />
-          <MenuButton
-            title="CATEGORIES"
-            source={require('../../../assets/icons/category.png')}
-            onPress={() => {
-              navigation.navigate('Categories');
-              navigation.closeDrawer();
-            }}
-          />
-          <MenuButton
-            title="CATEGORIES"
-            source={require('../../../assets/icons/category.png')}
-            onPress={() => {
-              navigation.navigate('Categories');
-              navigation.closeDrawer();
-            }}
-          />
-          <MenuButton
-            title="CATEGORIES"
-            source={require('../../../assets/icons/category.png')}
-            onPress={() => {
-              navigation.navigate('Categories');
-              navigation.closeDrawer();
-            }}
-          />
-          <MenuButton
-            title="SEARCH"
-            source={require('../../../assets/icons/search.png')}
+          <MenuIcon
+            title="Keluar"
+            source="logout"
             onPress={() => {
               navigation.navigate('Search');
               navigation.closeDrawer();
