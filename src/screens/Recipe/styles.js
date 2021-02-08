@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   textIcon: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: 'purple',
   },
   textIconSmall: {
     fontSize: 12,

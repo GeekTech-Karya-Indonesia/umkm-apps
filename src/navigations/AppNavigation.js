@@ -112,11 +112,7 @@ function HomeStack() {
 
 function BottomTabs() {
   return (
-    <Tab.Navigator
-      initialRouteName="Feed"
-      tabBarOptions={{
-        activeTintColor: '#e91e63',
-      }}>
+    <Tab.Navigator initialRouteName="Feed" style={{ tabBarOptions: { indicatorStyle: { backgroundColor: 'transparent', } } }}>
       <Tab.Screen
         name="HomeStack"
         component={HomeStack}
@@ -129,6 +125,13 @@ function BottomTabs() {
         component={CategoriesScreen}
         options={{
             tabBarButton: (props) => <TabComponent label="cube" text="Kategori" {...props} />
+        }}
+      />
+       <Tab.Screen
+        name="Bookmark"
+        component={CategoriesScreen}
+        options={{
+            tabBarButton: (props) => <TabComponent label="heart-multiple-outline" text="Tersimpan" {...props} />
         }}
       />
       <Tab.Screen

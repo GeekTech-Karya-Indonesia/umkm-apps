@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   textIcon: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: 'purple',
     marginBottom: 0,
     marginTop: 5,
     marginBottom: 5

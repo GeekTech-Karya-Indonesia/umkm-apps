@@ -8,14 +8,14 @@ const bgColors = {
   home: '#e5c1e5',
   account: '#e5c1e5',
   cube: '#e5c1e5',
-  menu: '#e5c1e5',
+  'heart-multiple-outline': '#e5c1e5',
 };
 
 const textColors = {
   home: '#9932CC',
   account: '#9932CC',
   cube: '#9932CC',
-  menu: '#9932CC',
+  'heart-multiple-outline': '#9932CC',
 };
 
 const Container = styled.TouchableWithoutFeedback``;
@@ -65,7 +65,7 @@ function Tab({ label, accessibilityState, onPress, text }) {
         label={label}
         ref={ref}
         transition={transition}>
-          <MaterialCommunityIcons name={label} color={'#9932CC'} size={18}/>
+          <MaterialCommunityIcons name={label} color={'#9932CC'} size={24}/>
           {focused && (
             <Label label={label}>
               {text.charAt(0).toUpperCase() + text.slice(1)}
