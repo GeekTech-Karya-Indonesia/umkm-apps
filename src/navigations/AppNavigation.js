@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { createAppContainer } from 'react-navigation';
-import {createDrawerNavigator} from 'react-navigation-drawer'
-import {createStackNavigator} from 'react-navigation-stack'
+// import { createAppContainer } from 'react-navigation';
+// import {createDrawerNavigator} from 'react-navigation-drawer'
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+// import {createStackNavigator} from '@react-navigation/stack'
 /* import React from 'react'
 import {createStackNavigator} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native'
@@ -13,15 +14,18 @@ import RecipesListScreen from '../screens/RecipesList/RecipesListScreen';
 import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
+import ProfileScreen from '../screens/Profile/ProfileScreen';
 import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
-
+import TabComponent from '../components/Tab/Tab';
+import {createStackNavigator} from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { MaterialCommunityIcons  } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
+
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-/* const Stack = createStackNavigator();
-
+/*
 function MainNavigator() {
   return(
     <Stack.Navigator
@@ -45,29 +49,29 @@ function MainNavigator() {
   )
 } */
 
-const MainNavigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Categories: CategoriesScreen,
-    Recipe: RecipeScreen,
-    RecipesList: RecipesListScreen,
-    Ingredient: IngredientScreen,
-    Search: SearchScreen,
-    IngredientsDetails: IngredientsDetailsScreen
-  },
-  {
-    initialRouteName: 'Home',
-    // headerMode: 'float',
-    defaulfNavigationOptions: ({ navigation }) => ({
-      headerTitleStyle: {
-        fontWeight: 'bold',
-        textAlign: 'center',
-        alignSelf: 'center',
-        flex: 1,
-      }
-    })
-  }
-); 
+// const MainNavigator = createStackNavigator(
+//   {
+//     Home: HomeScreen,
+//     Categories: CategoriesScreen,
+//     Recipe: RecipeScreen,
+//     RecipesList: RecipesListScreen,
+//     Ingredient: IngredientScreen,
+//     Search: SearchScreen,
+//     IngredientsDetails: IngredientsDetailsScreen
+//   },
+//   {
+//     initialRouteName: 'Home',
+//     // headerMode: 'float',
+//     defaulfNavigationOptions: ({ navigation }) => ({
+//       headerTitleStyle: {
+//         fontWeight: 'bold',
+//         textAlign: 'center',
+//         alignSelf: 'center',
+//         flex: 1,
+//       }
+//     })
+//   }
+// ); 
 
 /* const Drawer = createDrawerNavigator();
 
@@ -87,52 +91,50 @@ function DrawerStack() {
 } */
 
 
-function MyTabs() {
+
+function HomeStack() {
+  return (
+    <Stack.Navigator  screenOptions={{
+      headerShown: false
+    }} initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+      />
+      <Stack.Screen
+        name="Recipe"
+        component={RecipeScreen}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function BottomTabs() {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
       tabBarOptions={{
         activeTintColor: '#e91e63',
-      }}
-    >
+      }}>
       <Tab.Screen
-        name="Feed"
-        component={HomeScreen}
+        name="HomeStack"
+        component={HomeStack}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
+            tabBarButton: (props) => <TabComponent label="home" {...props} />
         }}
       />
       <Tab.Screen
-        name="TS"
+        name="Categories"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
+            tabBarButton: (props) => <TabComponent label="home" {...props} />
         }}
       />
       <Tab.Screen
-        name="ST"
-        component={HomeScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="XS"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
-          ),
+            tabBarButton: (props) => <TabComponent label="account" {...props} />
         }}
       />
     </Tab.Navigator>
@@ -153,12 +155,12 @@ function MyTabs() {
  export default function AppContainer() {
   return(
     <NavigationContainer>
-      <MyTabs/>
+      <BottomTabs/>
     </NavigationContainer>
   )
 } 
  
 // export default AppContainer = createAppContainer(DrawerStack);
-// export default AppContainer = createAppContainer(MyTabs);
+// export default AppContainer = createAppContainer(BottomTabs);
 
 console.disableYellowBox = true;

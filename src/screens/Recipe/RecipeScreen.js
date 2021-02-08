@@ -27,6 +27,8 @@ const locations = require('./location.json')
 
 export default class RecipeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
+
+    console.log(navigation, 'YESSSSS')
     return {
       headerTitle: null,
       headerTransparent: 'true',
@@ -53,6 +55,7 @@ export default class RecipeScreen extends React.Component {
   }
 
   async componentDidMount() {
+    console.log(this.props, 'HERE PROPS')
     const { status } = await Permissions.getAsync(Permissions.LOCATION)
     if (status !== 'granted') {
       const response = await Permissions.askAsync(Permissions.LOCATION)
@@ -164,7 +167,8 @@ export default class RecipeScreen extends React.Component {
 
   descriptionAcordian = (data) => {
     const { navigation } = this.props;
-    const item = navigation.getParam('item');
+    console.log(navigation.dangerouslyGetParent, 'TEST')
+    const item = navigation.route.params('item');
     this.setState({
       description: [
         { title: "Deskripsi", content: item.description, 
@@ -183,10 +187,11 @@ export default class RecipeScreen extends React.Component {
       distance,
       latitude
     } = this.state;
-    const { navigation } = this.props;
-    const item = navigation.getParam('item');
+    const { navigation, route } = this.props;
+    const { item } = route.params
     const category = getCategoryById(item.categoryId);
-    const title = getCategoryName(category.id);
+    const title = getCategoryName(category);
+    console.log('ITEM', item)
     return (
       <ScrollView style={styles.container}>
         <View style={styles.container}>
