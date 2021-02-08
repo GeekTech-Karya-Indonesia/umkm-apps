@@ -5,17 +5,17 @@ import { MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
 import Images from '../../images';
 
 const bgColors = {
-  home: '#ffe1c5',
+  home: '#e5c1e5',
   account: '#e5c1e5',
-  documents: '#d7d8f8',
-  menu: '#bce3fa',
+  cube: '#e5c1e5',
+  menu: '#e5c1e5',
 };
 
 const textColors = {
-  home: '#c56b14',
-  account: '#f37ff3',
-  documents: '#4b458c',
-  menu: '#2d9cdb',
+  home: '#9932CC',
+  account: '#9932CC',
+  cube: '#9932CC',
+  menu: '#9932CC',
 };
 
 const Container = styled.TouchableWithoutFeedback``;
@@ -40,7 +40,7 @@ const Label = styled.Text`
   margin-left: 8px;
 `;
 
-function Tab({ label, accessibilityState, onPress, color }) {
+function Tab({ label, accessibilityState, onPress, text }) {
   const focused = accessibilityState.selected;
   const icon = !focused ? Images.icons[label] : Images.icons[`${label}Focused`];
 
@@ -65,10 +65,10 @@ function Tab({ label, accessibilityState, onPress, color }) {
         label={label}
         ref={ref}
         transition={transition}>
-          <MaterialCommunityIcons name={label} color={"red"} />
+          <MaterialCommunityIcons name={label} color={'#9932CC'} size={18}/>
           {focused && (
             <Label label={label}>
-              {label.charAt(0).toUpperCase() + label.slice(1)}
+              {text.charAt(0).toUpperCase() + text.slice(1)}
             </Label>
           )}
       </Background>

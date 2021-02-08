@@ -1,10 +1,8 @@
 import React from 'react';
 import {
-  FlatList,
   ScrollView,
   Text,
   View,
-  TouchableOpacity,
   Image,
   Dimensions,
   TouchableHighlight
@@ -19,7 +17,7 @@ import { Rating } from 'react-native-ratings';
 import { Accordion, Block } from 'galio-framework';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 const { width: viewportWidth } = Dimensions.get('window');
-import { AntDesign, Entypo, Octicons, MaterialCommunityIcons, MaterialIcons  } from '@expo/vector-icons';
+import { AntDesign, Entypo, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions'
 import polyline from '@mapbox/polyline'
 import * as Location from 'expo-location';
@@ -167,7 +165,6 @@ export default class RecipeScreen extends React.Component {
 
   descriptionAcordian = (data) => {
     const { navigation } = this.props;
-    console.log(navigation.dangerouslyGetParent, 'TEST')
     const item = navigation.route.params('item');
     this.setState({
       description: [

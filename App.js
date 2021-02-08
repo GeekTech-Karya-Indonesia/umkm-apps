@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppContainer from './src/navigations/AppNavigation';
 import * as Font from 'expo-font';
-import { Ionicons, AntDesign, Entypo, Octicons, MaterialCommunityIcons, MaterialIcons   } from '@expo/vector-icons';
+import { Ionicons, AntDesign, Entypo, Octicons, Roboto, MaterialCommunityIcons, MaterialIcons   } from '@expo/vector-icons';
 import { AppLoading } from 'expo';
 export default function App() {
   const [isLoadingComplete, setIsLoadingComplete ] = useState(false)

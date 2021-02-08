@@ -94,7 +94,8 @@ function DrawerStack() {
 
 function HomeStack() {
   return (
-    <Stack.Navigator  screenOptions={{
+    <Stack.Navigator  
+      screenOptions={{
       headerShown: false
     }} initialRouteName="Home">
       <Stack.Screen
@@ -120,21 +121,21 @@ function BottomTabs() {
         name="HomeStack"
         component={HomeStack}
         options={{
-            tabBarButton: (props) => <TabComponent label="home" {...props} />
+            tabBarButton: (props) => <TabComponent label="home" text="Beranda" {...props} />
         }}
       />
       <Tab.Screen
         name="Categories"
-        component={HomeScreen}
+        component={CategoriesScreen}
         options={{
-            tabBarButton: (props) => <TabComponent label="home" {...props} />
+            tabBarButton: (props) => <TabComponent label="cube" text="Kategori" {...props} />
         }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-            tabBarButton: (props) => <TabComponent label="account" {...props} />
+            tabBarButton: (props) => <TabComponent label="account" text="Akun" {...props} />
         }}
       />
     </Tab.Navigator>
