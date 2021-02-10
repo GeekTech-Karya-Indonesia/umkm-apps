@@ -1,1 +1,1 @@
-export const BASE_URL = 'http://192.168.100.2:1337';
+export const BASE_URL = 'https://sip3.bekasikota.go.id/v2/';

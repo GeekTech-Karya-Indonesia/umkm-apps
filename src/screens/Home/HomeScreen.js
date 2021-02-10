@@ -69,7 +69,6 @@ export default class HomeScreen extends React.Component {
     const { label, value, icon } = item
     const { onClickIndex } = this.state
     const backgroundColor = index !== onClickIndex ? "transparent" : "#e5c1e5"
-    const renderTextAll = index === 0 && (<Text style={styles.textIcon}>All</Text>)
     return (
       <TouchableHighlight   
         style = {{
@@ -84,8 +83,7 @@ export default class HomeScreen extends React.Component {
       }}
       underlayColor = '#ccc'
       onPress = { () => this.setState({ onClickIndex: index }) }>
-         <Text style={styles.textIcon}><MaterialCommunityIcons name={icon} size={20} color="#9932CC" /></Text>
-          { renderTextAll }
+        <Text style={styles.textIcon}><MaterialCommunityIcons name={icon} size={20} color="#9932CC" /></Text>
       </TouchableHighlight>
     )
   };
@@ -95,7 +93,7 @@ export default class HomeScreen extends React.Component {
     const categories = [{
       label: 'All',
       value: 'all',
-      icon: 'refresh'
+      icon: 'menu'
     }, {
       label: 'Makanan',
       value: 'makanan',

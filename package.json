@@ -22,6 +22,7 @@
     "expo-secure-store": "^10.0.0",
     "galio-framework": "^0.7.1",
     "native-base": "^2.15.2",
+    "qs-stringify": "^1.2.1",
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.0.tar.gz",
