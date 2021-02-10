@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AppContainer from './src/navigations/AppNavigation';
 import * as Font from 'expo-font';
-import { Ionicons, AntDesign, Entypo, Octicons, Roboto, MaterialCommunityIcons, MaterialIcons   } from '@expo/vector-icons';
+import { Ionicons, AntDesign, Entypo, Octicons, FontAwesome, MaterialCommunityIcons, MaterialIcons   } from '@expo/vector-icons';
 import { AppLoading } from 'expo';
+import { AuthContext } from './src/contexts/AuthContext';
+import { useAuth } from './src/hooks/useAuth';
 export default function App() {
+  const { auth, state } = useAuth();
   const [isLoadingComplete, setIsLoadingComplete ] = useState(false)
   useEffect(() => {
     native_base();
@@ -16,6 +19,7 @@ export default function App() {
     await Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      ...FontAwesome.font,
       ...Ionicons.font,
       ...AntDesign.font,
       ...Entypo.font,
@@ -31,7 +35,9 @@ export default function App() {
   }
 
   return (
-     <AppContainer />
+    <AuthContext.Provider value={auth}>
+      <AppContainer />
+     </AuthContext.Provider>
   );
 
 }

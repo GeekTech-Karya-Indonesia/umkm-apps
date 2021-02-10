@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5
   },
+  textHeader: {
+    fontSize: 8,
+    fontWeight: 'bold',
+    marginBottom: 0,
+    marginTop: 0,
+    color: '#9932CC'
+  },
   shadow: {
     shadowColor: "#000",
     shadowOffset: {
