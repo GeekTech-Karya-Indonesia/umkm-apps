@@ -60,7 +60,6 @@ export function useAuth() {
           console.log(error, 'TEST');
         });
 
-        console.log('DONE')
           
         // const { data } = await axios.post(`${BASE_URL}/auth/local`, {
         //   identifier: email,
