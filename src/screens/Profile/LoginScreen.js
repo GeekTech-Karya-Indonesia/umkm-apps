@@ -11,7 +11,7 @@ import {AuthContext} from '../../contexts/AuthContext';
 // import {Loading} from '../components/auth/Loading';
 import { Container, Header, Content, Item, Input, Icon, Card, CardItem, Text, Right, Toast  } from 'native-base';
 
- function LoginScreen({navigation}) {
+ function LoginScreen({ navigation }) {
   const {login, logout, test} = React.useContext(AuthContext);
   const [email, setEmail] = React.useState('usertesting@gas.com');
   const [password, setPassword] = React.useState('Sejati123');
