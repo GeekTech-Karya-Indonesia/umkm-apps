@@ -5,6 +5,7 @@ import {
   View,
   Image,
   Dimensions,
+  Alert,
   TouchableHighlight
 } from 'react-native';
 import styles from './styles';
@@ -12,7 +13,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { getIngredientName, getCategoryName, getCategoryById } from '../../data/MockDataAPI';
 import BackButton from '../../components/BackButton/BackButton';
 import ViewIngredientsButton from '../../components/ViewIngredientsButton/ViewIngredientsButton';
-import { Container, Content, Card, CardItem, Right, Left, Body, Thumbnail} from 'native-base';
+import { Container, Content, Card, CardItem, Right, Left, Body, Thumbnail, Button} from 'native-base';
 import { Rating } from 'react-native-ratings';
 import { Accordion, Block } from 'galio-framework';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline, AnimatedRegion  } from 'react-native-maps';
@@ -21,6 +22,7 @@ import { AntDesign, Entypo, Octicons, MaterialCommunityIcons } from '@expo/vecto
 import * as Permissions from 'expo-permissions'
 import polyline from '@mapbox/polyline'
 import * as Location from 'expo-location';
+import PermissionScreen from '../Permission/PermissionScreen'
 const locations = require('./location.json')
 
 export default class RecipeScreen extends React.Component {
@@ -45,6 +47,7 @@ export default class RecipeScreen extends React.Component {
       active: true,
       time: 'Sedang Menghitung...',
       distance: 'Sedang Menghitung...',
+      status: null,
       latitude: null,
       longitude: null,
       locations: locations,
@@ -58,12 +61,19 @@ export default class RecipeScreen extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  onNavigatePush = () => {
+    const { navigation } = this.props
+    return navigation.navigate('Home')
+  }
+
+  getLocationAsync = async () => {
     const { status } = await Permissions.getAsync(Permissions.LOCATION)
     if (status !== 'granted') {
       const response = await Permissions.askAsync(Permissions.LOCATION)
     }
-    await Location.getCurrentPositionAsync({}).then(({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude }, this.mergeCoords))
+    await Location.getCurrentPositionAsync({})
+      .then(({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude, status }, this.mergeCoords))
+      .catch(err => err)
     const { locations: [ sampleLocation ] } = this.state
     this.setState({
       desLatitude: sampleLocation.coords.latitude,
@@ -71,6 +81,10 @@ export default class RecipeScreen extends React.Component {
     }, this.mergeCoords)
 
     this.descriptionAcordian()
+  }
+
+  async componentDidMount() {
+    this.getLocationAsync()
   }
 
   mergeCoords = () => {
@@ -188,13 +202,13 @@ export default class RecipeScreen extends React.Component {
       time,
       coords,
       distance,
-      latitude
+      latitude,
+      status
     } = this.state;
     const { navigation, route } = this.props;
     const { item } = route.params
     const category = getCategoryById(item.categoryId);
     const title = getCategoryName(category);
-    console.log('ITEM', item)
     return (
       <ScrollView style={styles.container}>
         <View style={styles.container}>
