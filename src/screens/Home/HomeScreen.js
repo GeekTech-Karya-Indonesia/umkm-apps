@@ -10,6 +10,7 @@ import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { ListItem, SearchBar } from 'react-native-elements';
 import { DeckSwiper, Block } from 'galio-framework';
 import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
+import { getSpeed, getDistance, convertDistance, convertSpeed } from 'geolib';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -32,6 +33,7 @@ export default class HomeScreen extends React.Component {
     this.state = {
       search: '',
       onClickIndex: 0,
+      convertDistance: 0,
     }
   }
 
@@ -43,20 +45,26 @@ export default class HomeScreen extends React.Component {
     this.setState({ search });
   };
 
+  componentDidMount = () => {
+   const test = getDistance(
+    { latitude: -6.2577257, longitude: 107.0049049},
+    { latitude: -6.4477257, longitude: 107.0049049 }
+  )
+  const distance = convertDistance(test, 'km')
+    this.setState({
+      convertDistance: distance.toFixed()
+    })
+  }
+
   renderRecipes = ({ item }) => (
     <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)}>
       <View style={styles.container}>
         <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <Badge
           status="success"
-          value="15 Menit"
+          value={`+${this.state.convertDistance}km`}
           containerStyle={{ position: 'absolute', top: 0, right: -10 }}
         />
-        <Badge
-          status="warning"
-          value="25 Km"
-          containerStyle={{ position: 'absolute', top: 20, right: -10 }}
-        /> 
         <Text style={styles.title}>{item.title}</Text>
         {/* <Text style={styles.textIcon}>{getCategoryName(item.categoryId)}</Text> */}
         <Text style={styles.textIcon}><MaterialCommunityIcons name="cash-multiple" size={12} color="green" /> Rp250.000 </Text>
@@ -160,6 +168,9 @@ export default class HomeScreen extends React.Component {
             contentContainerStyle={{ paddingVertical: 10,  paddingHorizontal: 10 * 2 }}
           />
         </View>
+        <View style={{
+          marginBottom: 320
+        }}>
         <FlatList
           vertical
           showsVerticalScrollIndicator={false}
@@ -168,6 +179,7 @@ export default class HomeScreen extends React.Component {
           renderItem={this.renderRecipes}
           keyExtractor={item => `${item.recipeId}`}
         />
+        </View>
       </View>
     );
   }

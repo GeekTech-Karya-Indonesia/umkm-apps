@@ -15,7 +15,7 @@ import ViewIngredientsButton from '../../components/ViewIngredientsButton/ViewIn
 import { Container, Content, Card, CardItem, Right, Left, Body, Thumbnail} from 'native-base';
 import { Rating } from 'react-native-ratings';
 import { Accordion, Block } from 'galio-framework';
-import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Polyline, AnimatedRegion  } from 'react-native-maps';
 const { width: viewportWidth } = Dimensions.get('window');
 import { AntDesign, Entypo, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions'
@@ -45,9 +45,17 @@ export default class RecipeScreen extends React.Component {
     this.state = {
       activeSlide: 0,
       active: true,
+      time: 'Sedang Menghitung...',
+      distance: 'Sedang Menghitung...',
       latitude: null,
       longitude: null,
       locations: locations,
+      region: new AnimatedRegion({
+        latitude: -6.4477257,
+        longitude: 107.0049049,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
+      }),
       description: []
     };
   }
@@ -138,12 +146,13 @@ export default class RecipeScreen extends React.Component {
     const { 
       coords,
       latitude,
-      longitude
+      longitude,
+      region
     } = this.state;
     return (<MapView
       provide={PROVIDER_GOOGLE}
       showsUserLocation
-      style={styles.map} 
+      style={styles.map}
       initialRegion={{
         latitude,
         longitude,
