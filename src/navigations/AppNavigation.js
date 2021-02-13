@@ -15,6 +15,7 @@ import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
+import PermissionScreen from '../screens/Permission/PermissionScreen';
 import SettingScreen from '../screens/Profile/SettingScreen';
 import AccountScreen from '../screens/Profile/AccountScreen';
 import WhishScreen from '../screens/Whish/WhishScreen';
@@ -158,7 +159,7 @@ function ProfileStack({ navigation }) {
 
 function BottomTabs() {
   return (
-    <Tab.Navigator initialRouteName="Feed" style={{ tabBarOptions: { indicatorStyle: { backgroundColor: 'transparent', } } }}>
+    <Tab.Navigator initialRouteName="MainTab" style={{ tabBarOptions: { indicatorStyle: { backgroundColor: 'transparent', } } }}>
       <Tab.Screen
         name="HomeStack"
         component={HomeStack}
@@ -202,10 +203,29 @@ function BottomTabs() {
 //   }
 // );
 
+function PermissionStack() {
+  return (
+    <Stack.Navigator  
+      screenOptions={{
+      headerShown: false
+    }} initialRouteName="Permission">
+      <Stack.Screen
+        name="Permission"
+        component={PermissionScreen}
+      />
+      <Stack.Screen
+        name="MainTab"
+        component={BottomTabs}
+      />
+    </Stack.Navigator>
+  );
+}
+
  export default function AppContainer() {
   return(
     <NavigationContainer>
-      <BottomTabs/>
+      {/* <BottomTabs/> */}
+      <PermissionStack />
     </NavigationContainer>
   )
 } 

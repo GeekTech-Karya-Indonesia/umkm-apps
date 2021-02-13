@@ -48,34 +48,6 @@ import styles from './styles';
           <Text><AntDesign name="heart" size={24} color="red" /></Text>
         </Right>
       </ListItem>
-      <ListItem avatar>
-        <Left>
-          <Thumbnail source={{ uri: 'http://i.pravatar.cc/100' }} />
-        </Left>
-        <Body>
-          <Text>Nama Produk</Text>
-          <Text note>Here Deskripsi of Product . .</Text>
-          <Text style={styles.textIcon}><Entypo name="location" size={16} color="#9932CC" /> Bekasi Kota, Jalan Alap-alap</Text>
-          <Text style={styles.textIcon}><MaterialCommunityIcons name="cash-multiple" size={16} color="green" /> Rp250.000</Text>
-        </Body>
-        <Right>
-          <Text><AntDesign name="heart" size={24} color="red" /></Text>
-        </Right>
-      </ListItem>
-      <ListItem avatar>
-        <Left>
-          <Thumbnail source={{ uri: 'http://i.pravatar.cc/100' }} />
-        </Left>
-        <Body>
-          <Text>Nama Produk</Text>
-          <Text note>Here Deskripsi of Product . .</Text>
-          <Text style={styles.textIcon}><Entypo name="location" size={16} color="#9932CC" /> Bekasi Kota, Jalan Alap-alap</Text>
-          <Text style={styles.textIcon}><MaterialCommunityIcons name="cash-multiple" size={16} color="green" /> Rp250.000</Text>
-        </Body>
-        <Right>
-          <Text><AntDesign name="heart" size={24} color="red" /></Text>
-        </Right>
-      </ListItem>
       </Content>
     </Container>
   </Container>

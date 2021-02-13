@@ -25,8 +25,6 @@ const locations = require('./location.json')
 
 export default class RecipeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-
-    console.log(navigation, 'YESSSSS')
     return {
       headerTitle: null,
       headerTransparent: 'true',
@@ -61,7 +59,6 @@ export default class RecipeScreen extends React.Component {
   }
 
   async componentDidMount() {
-    console.log(this.props, 'HERE PROPS')
     const { status } = await Permissions.getAsync(Permissions.LOCATION)
     if (status !== 'granted') {
       const response = await Permissions.askAsync(Permissions.LOCATION)
@@ -173,8 +170,8 @@ export default class RecipeScreen extends React.Component {
   }
 
   descriptionAcordian = (data) => {
-    const { navigation } = this.props;
-    const item = navigation.route.params('item');
+    const { navigation, route } = this.props;
+    const { item } = route.params
     this.setState({
       description: [
         { title: "Deskripsi", content: item.description, 

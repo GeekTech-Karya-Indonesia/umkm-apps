@@ -11,6 +11,7 @@ import { ListItem, SearchBar } from 'react-native-elements';
 import { DeckSwiper, Block } from 'galio-framework';
 import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 import { getSpeed, getDistance, convertDistance, convertSpeed } from 'geolib';
+import * as Permissions from 'expo-permissions'
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -45,7 +46,7 @@ export default class HomeScreen extends React.Component {
     this.setState({ search });
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
    const test = getDistance(
     { latitude: -6.2577257, longitude: 107.0049049},
     { latitude: -6.4477257, longitude: 107.0049049 }
@@ -54,16 +55,18 @@ export default class HomeScreen extends React.Component {
     this.setState({
       convertDistance: distance.toFixed()
     })
+    const { status } = await Permissions.getAsync(Permissions.LOCATION)
+    console.log(status, 'THE STATUS')
   }
 
   renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)}>
+    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)} key={item.item}>
       <View style={styles.container}>
         <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <Badge
           status="success"
           value={`+${this.state.convertDistance}km`}
-          containerStyle={{ position: 'absolute', top: 0, right: -10 }}
+          containerStyle={{ position: 'absolute', top: 5, right: -10 }}
         />
         <Text style={styles.title}>{item.title}</Text>
         {/* <Text style={styles.textIcon}>{getCategoryName(item.categoryId)}</Text> */}
@@ -74,11 +77,12 @@ export default class HomeScreen extends React.Component {
   );
 
   renderMain = ({ item, index }) => {
-    const { label, value, icon } = item
+    const { label, value, icon, id } = item
     const { onClickIndex } = this.state
     const backgroundColor = index !== onClickIndex ? "transparent" : "#e5c1e5"
     return (
-      <TouchableHighlight   
+      <TouchableHighlight
+        key={id}   
         style = {{
         borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
         width: 40,
@@ -99,38 +103,47 @@ export default class HomeScreen extends React.Component {
   render() {
     const { search } = this.state;
     const categories = [{
+      id: 1,
       label: 'All',
       value: 'all',
       icon: 'menu'
     }, {
+      id: 2,
       label: 'Makanan',
       value: 'makanan',
       icon: 'food-variant'
     }, {
+      id: 122,
       label: 'Anak',
       value: 'anak',
       icon: 'baby-carriage'
     }, {
+      id: 14423,
       label: 'Style',
       value: 'style',
       icon: 'tshirt-crew'
     }, {
+      id: 15532,
       label: 'Perlengkapan',
       value: 'perlengkapan',
        icon: 'home-variant'
     }, {
+      id: 155431,
       label: 'Kendaraan',
       value: 'kendaraan',
        icon: 'car'
     }, {
+      id: 11234,
       label: 'Sekolah',
       value: 'sekolah',
        icon: 'school'
     }, {
+      id: 186,
       label: 'Olah Raga',
       value: 'olahraga',
        icon: 'soccer'
     }, {
+      id: 1523,
       label: 'Lain-lain',
       value: 'lain-lain',
        icon: 'all-inclusive'

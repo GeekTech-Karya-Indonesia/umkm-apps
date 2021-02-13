@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import AppContainer from './src/navigations/AppNavigation';
 import * as Font from 'expo-font';
 import { Ionicons, AntDesign, Entypo, Octicons, FontAwesome, MaterialCommunityIcons, MaterialIcons   } from '@expo/vector-icons';
-import { AppLoading } from 'expo';
+import AppLoading from 'expo-app-loading';
 import { AuthContext } from './src/contexts/AuthContext';
 import { useAuth } from './src/hooks/useAuth';
 export default function App() {
