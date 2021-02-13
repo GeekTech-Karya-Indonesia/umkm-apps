@@ -49,8 +49,14 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 16,
+    borderColor: '#cccccc',
+    backgroundColor: 'transparent',
+  },
+  containerSearchBar: {
     paddingTop: 30,
+  },
+  containerItem: {
+    padding: 10,
     backgroundColor: 'transparent',
   }
 });

@@ -15,13 +15,17 @@ import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
 import ProfileScreen from '../screens/Profile/ProfileScreen';
+import SettingScreen from '../screens/Profile/SettingScreen';
+import AccountScreen from '../screens/Profile/AccountScreen';
+import WhishScreen from '../screens/Whish/WhishScreen';
 import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
 import TabComponent from '../components/Tab/Tab';
 import {createStackNavigator} from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, Entypo  } from '@expo/vector-icons';
-
+import { Button } from 'react-native';
+import BackButton from '../components/BackButton/BackButton'
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
@@ -110,6 +114,48 @@ function HomeStack() {
   );
 }
 
+function ProfileStack({ navigation }) {
+  return (
+    <Stack.Navigator  
+      screenOptions={{
+    }} initialRouteName="Profile">
+      <Stack.Screen
+        name="Profile"
+        options={{ title: 'Pengaturan Akun' }}
+        component={ProfileScreen}
+      />
+      <Stack.Screen
+        name="Account"
+        component={AccountScreen}
+        options={{
+          title: 'Akun', 
+          headerLeft: () => (
+            <BackButton
+                onPress={() => {
+                navigation.navigate('Profile');
+              }}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Setting"
+        options={{
+          title: 'Pengaturan', 
+          headerLeft: () => (
+            <BackButton
+                onPress={() => {
+                navigation.navigate('Profile');
+              }}
+            />
+          ),
+        }}
+        component={SettingScreen}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function BottomTabs() {
   return (
     <Tab.Navigator initialRouteName="Feed" style={{ tabBarOptions: { indicatorStyle: { backgroundColor: 'transparent', } } }}>
@@ -128,15 +174,15 @@ function BottomTabs() {
         }}
       />
        <Tab.Screen
-        name="Bookmark"
-        component={CategoriesScreen}
+        name="Whish"
+        component={WhishScreen}
         options={{
             tabBarButton: (props) => <TabComponent label="heart-multiple-outline" text="Tersimpan" {...props} />
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
             tabBarButton: (props) => <TabComponent label="account" text="Akun" {...props} />
         }}
