@@ -33,6 +33,8 @@ export const recipes = [
   {
     recipeId: 1,
     categoryId: 3,
+    latitude: -6.6577257, longitude: 107.0049049,
+    fare: 0,
     title: 'Oatmeal Cookies',
     photo_url: 'https://www.texanerin.com/content/uploads/2019/06/nobake-chocolate-cookies-1-650x975.jpg',
     photosArray: [
@@ -51,6 +53,8 @@ export const recipes = [
     recipeId: 3,
     categoryId: 4,
     title: 'Triple Berry Smoothie',
+    latitude: -6.7577257, longitude: 107.0049049,
+    fare: 0,
     photo_url:
       'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/delish-how-to-make-a-smoothie-horizontal-1542310071.png?crop=0.803xw:0.923xh;0.116xw,0.00510xh&resize=768:*',
     photosArray: [
@@ -70,6 +74,8 @@ export const recipes = [
   {
     recipeId: 2,
     categoryId: 3,
+    latitude: -6.4977257, longitude: 107.0049049,
+    fare: 0,
     title: 'Vegan Cookies',
     photo_url: 'https://www.texanerin.com/content/uploads/2018/06/no-bake-lactation-cookies-1-650x975.jpg',
     photosArray: [
@@ -98,6 +104,8 @@ export const recipes = [
     recipeId: 3,
     categoryId: 3,
     title: 'Pumpkin Spice Cookies',
+    latitude: -6.4477257, longitude: 107.0049049,
+    fare: 0,
     photo_url:
       'https://www.texanerin.com/content/uploads/2018/11/pumpkin-spice-cookies-4-650x975.jpg',
     photosArray: [
@@ -128,6 +136,8 @@ export const recipes = [
   {
     recipeId: 9,
     categoryId: 3,
+    latitude: -6.2777257, longitude: 107.0049049,
+    fare: 0,
     title: 'Brownies',
     photo_url: 'https://www.texanerin.com/content/uploads/2018/01/coconut-flour-brownies-1-650x975.jpg',
     photosArray: [
@@ -161,6 +171,8 @@ export const recipes = [
   {
     recipeId: 4,
     categoryId: 1,
+    latitude: -6.1077257, longitude: 107.0049049,
+    fare: 0,
     title: 'Perfect Fish Tacos',
     photo_url: 'https://hips.hearstapps.com/hmg-prod/images/190307-fish-tacos-112-1553283299.jpg',
     photosArray: [
@@ -188,6 +200,8 @@ export const recipes = [
   {
     recipeId: 5,
     categoryId: 1,
+    latitude: -6.1177257, longitude: 107.0049049,
+    fare: 0,
     title: 'Chicken Fajitas',
     photo_url:
       'https://tmbidigitalassetsazure.blob.core.windows.net/secure/RMS/attachments/37/1200x1200/Flavorful-Chicken-Fajitas_EXPS_GHBZ18_12540_B08_15_8b.jpg',
@@ -219,6 +233,8 @@ export const recipes = [
   {
     recipeId: 6,
     categoryId: 2,
+    latitude: -6.5177257, longitude: 107.0049049,
+    fare: 0,
     title: 'Buffalo Pizza',
     photo_url:
       'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
@@ -250,6 +266,8 @@ export const recipes = [
   {
     recipeId: 0,
     categoryId: 0,
+    latitude: -6.4677257, longitude: 107.0049049,
+    fare: 0,
     title: 'Classic Lasagna',
     photo_url: 'https://namelymarly.com/wp-content/uploads/2018/04/20180415_Beet_Lasagna_10.jpg',
     photosArray: [
@@ -267,6 +285,8 @@ export const recipes = [
     recipeId: 7,
     categoryId: 2,
     title: 'Spaghetti Carbonara',
+    latitude: -6.3577257, longitude: 107.0049049,
+    fare: 0,
     photo_url: 'https://truffle-assets.imgix.net/655ce202-862-butternutsquashcarbonara-land.jpg',
     photosArray: [
       'https://ak3.picdn.net/shutterstock/videos/10431533/thumb/10.jpg',
@@ -291,6 +311,8 @@ export const recipes = [
     recipeId: 8,
     categoryId: 2,
     title: 'Lazania',
+    latitude: -6.2177257, longitude: 108.0049049,
+    fare: 0,
     photo_url: 'https://images8.alphacoders.com/817/817353.jpg',
     photosArray: [
       'https://previews.123rf.com/images/somegirl/somegirl1509/somegirl150900048/46103208-top-view-of-a-delicious-traditional-italian-lasagna-made-with-minced-beef-bolognese-sauce-topped-wit.jpg',

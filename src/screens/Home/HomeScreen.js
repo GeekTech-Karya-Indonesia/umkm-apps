@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, ScrollView, Text, View, TouchableHighlight, Image, Dimensions, Tab, Tabs, Container, Header } from 'react-native';
+import { FlatList, ScrollView, Alert, Text, View, TouchableHighlight, Image, Dimensions, Tab, Tabs, Container, Header } from 'react-native';
 import styles from './styles';
 import { recipes } from '../../data/dataArrays';
 import MenuImage from '../../components/MenuImage/MenuImage';
@@ -12,6 +12,7 @@ import { DeckSwiper, Block } from 'galio-framework';
 import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 import { getSpeed, getDistance, convertDistance, convertSpeed } from 'geolib';
 import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -35,37 +36,94 @@ export default class HomeScreen extends React.Component {
       search: '',
       onClickIndex: 0,
       convertDistance: 0,
+      latitude: null,
+      longitude: null,
+      status: null,
+      calculate: false,
+      recipes: []
     }
   }
 
   onPressRecipe = item => {
-    this.props.navigation.navigate('Recipe', { item });
+    const { status } = this.state
+    if (status) {
+      return this.props.navigation.navigate('Recipe', { item });
+    } else {
+      return Alert.alert(
+        "Aktifkan Lokasi Anda",
+        "Lokasi perangkat bertujuan melakukan sortir terhadap produk terdekat!",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => this.getLocationAsync() }
+        ],
+        { cancelable: false }
+      );
+    }
+    
   };
 
   updateSearch = (search) => {
     this.setState({ search });
   };
 
-  componentDidMount = async () => {
-   const test = getDistance(
-    { latitude: -6.2577257, longitude: 107.0049049},
-    { latitude: -6.4477257, longitude: 107.0049049 }
-  )
-  const distance = convertDistance(test, 'km')
-    this.setState({
-      convertDistance: distance.toFixed()
+  onCalculating = () => {
+    const { latitude, longitude, recipes } = this.state
+    const bracket = recipes
+    recipes.forEach((key, index) => {
+      if (!('latitude' in key) || !('longitude' in key) || !('fare' in key) ) {
+        return bracket[index].fare = `unknown`
+      } else {
+        if (key.longitude !== null && key.latitude !== null) {
+          const distance = getDistance(
+            { latitude, longitude,},
+            { latitude: key.latitude, longitude: key.longitude })
+            const fare = convertDistance(distance, 'km')
+          bracket[index].fare = `+${fare.toFixed()}km`
+        } else {
+          bracket[index].fare = `unknown`
+        }
+      }
     })
-    const { status } = await Permissions.getAsync(Permissions.LOCATION)
-    console.log(status, 'THE STATUS')
+    this.setState({
+      recipes: bracket,
+      calculate: true
+    })
+  }
+
+  getLocationAsync = async () => {
+    // permissions returns only for location permissions on iOS and under certain conditions, see Permissions.LOCATION
+    const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status === 'granted') {
+      return Location.getCurrentPositionAsync({ enableHighAccuracy: true })
+              .then(({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude, status }, this.onCalculating))
+              .catch(err => err)
+    } else {
+      throw new Error('Location permission not granted');
+    }
+  }
+
+  componentDidMount = async () => {
+    this.getLocationAsync()
+  }
+
+  componentWillMount = () => {
+    this.setState({
+      recipes: recipes
+    })
   }
 
   renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressRecipe(item)} key={item.item}>
+    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' 
+        onPress={() => this.onPressRecipe(item)} key={item.id}>
       <View style={styles.container}>
         <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <Badge
           status="success"
-          value={`+${this.state.convertDistance}km`}
+          value={this.state.calculate ? item.fare : "Sedang Menghitung..."}
           containerStyle={{ position: 'absolute', top: 5, right: -10 }}
         />
         <Text style={styles.title}>{item.title}</Text>
@@ -101,7 +159,7 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
-    const { search } = this.state;
+    const { search, recipes } = this.state;
     const categories = [{
       id: 1,
       label: 'All',
