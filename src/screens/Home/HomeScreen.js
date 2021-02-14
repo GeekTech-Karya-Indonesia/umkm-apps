@@ -1,9 +1,10 @@
 import React from 'react';
-import { FlatList, ScrollView, Alert, Text, View, TouchableHighlight, Image, Dimensions, Tab, Tabs, Container, Header } from 'react-native';
+import { FlatList, Animated, StatusBar, Alert, Text, View, TouchableHighlight, Image, Dimensions, StyleSheet, TouchableOpacity, Easing, SafeAreaViewBase, SafeAreaView } from 'react-native';
 import styles from './styles';
 import { recipes } from '../../data/dataArrays';
 import MenuImage from '../../components/MenuImage/MenuImage';
 import MenuHeader from '../../components/Header/MenuHeader';
+import LottieView from 'lottie-react-native';
 import DrawerActions from 'react-navigation';
 import { getCategoryName } from '../../data/MockDataAPI';
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,7 +14,53 @@ import { Avatar, Badge, Icon, withBadge } from 'react-native-elements'
 import { getSpeed, getDistance, convertDistance, convertSpeed } from 'geolib';
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location';
-
+const { width, height } = Dimensions.get('screen');
+const categories = [{
+  id: 1,
+  label: 'All',
+  value: 'all',
+  icon: 'menu'
+}, {
+  id: 2,
+  label: 'Makanan',
+  value: 'makanan',
+  icon: 'food-variant'
+}, {
+  id: 122,
+  label: 'Anak',
+  value: 'anak',
+  icon: 'baby-carriage'
+}, {
+  id: 14423,
+  label: 'Style',
+  value: 'style',
+  icon: 'tshirt-crew'
+}, {
+  id: 15532,
+  label: 'Perlengkapan',
+  value: 'perlengkapan',
+   icon: 'home-variant'
+}, {
+  id: 155431,
+  label: 'Kendaraan',
+  value: 'kendaraan',
+   icon: 'car'
+}, {
+  id: 11234,
+  label: 'Sekolah',
+  value: 'sekolah',
+   icon: 'school'
+}, {
+  id: 186,
+  label: 'Olah Raga',
+  value: 'olahraga',
+   icon: 'soccer'
+}, {
+  id: 1523,
+  label: 'Lain-lain',
+  value: 'lain-lain',
+   icon: 'all-inclusive'
+}]
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state
@@ -34,6 +81,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       search: '',
+      isLoading: true,
       onClickIndex: 0,
       convertDistance: 0,
       latitude: null,
@@ -97,6 +145,9 @@ export default class HomeScreen extends React.Component {
   getLocationAsync = async () => {
     // permissions returns only for location permissions on iOS and under certain conditions, see Permissions.LOCATION
     const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
+    this.setState({
+      isLoading: false,
+    })
     if (status === 'granted') {
       return Location.getCurrentPositionAsync({ enableHighAccuracy: true })
               .then(({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude, status }, this.onCalculating))
@@ -108,11 +159,18 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount = async () => {
     this.getLocationAsync()
+    this.animation.play();
   }
+
+  resetAnimation = () => {
+    this.animation.reset();
+    this.animation.play();
+  };
 
   componentWillMount = () => {
     this.setState({
-      recipes: recipes
+      recipes: recipes,
+      scrollY: new Animated.Value(0)
     })
   }
 
@@ -153,59 +211,14 @@ export default class HomeScreen extends React.Component {
       }}
       underlayColor = '#ccc'
       onPress = { () => this.setState({ onClickIndex: index }) }>
+        
         <Text style={styles.textIcon}><MaterialCommunityIcons name={icon} size={20} color="#9932CC" /></Text>
       </TouchableHighlight>
     )
   };
 
   render() {
-    const { search, recipes } = this.state;
-    const categories = [{
-      id: 1,
-      label: 'All',
-      value: 'all',
-      icon: 'menu'
-    }, {
-      id: 2,
-      label: 'Makanan',
-      value: 'makanan',
-      icon: 'food-variant'
-    }, {
-      id: 122,
-      label: 'Anak',
-      value: 'anak',
-      icon: 'baby-carriage'
-    }, {
-      id: 14423,
-      label: 'Style',
-      value: 'style',
-      icon: 'tshirt-crew'
-    }, {
-      id: 15532,
-      label: 'Perlengkapan',
-      value: 'perlengkapan',
-       icon: 'home-variant'
-    }, {
-      id: 155431,
-      label: 'Kendaraan',
-      value: 'kendaraan',
-       icon: 'car'
-    }, {
-      id: 11234,
-      label: 'Sekolah',
-      value: 'sekolah',
-       icon: 'school'
-    }, {
-      id: 186,
-      label: 'Olah Raga',
-      value: 'olahraga',
-       icon: 'soccer'
-    }, {
-      id: 1523,
-      label: 'Lain-lain',
-      value: 'lain-lain',
-       icon: 'all-inclusive'
-    }]
+    const { search, recipes, isLoading } = this.state;
     return (
       <View>
         <SearchBar
@@ -242,14 +255,25 @@ export default class HomeScreen extends React.Component {
         <View style={{
           marginBottom: 320
         }}>
-        <FlatList
-          vertical
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={recipes}
-          renderItem={this.renderRecipes}
-          keyExtractor={item => `${item.recipeId}`}
-        />
+        {/* <LottieView
+            ref={animation => {
+              this.animation = animation;
+            }}
+            style={{
+              width: 400,
+              height: 400,
+              backgroundColor: 'transparent',
+            }}
+            source={require('../../../assets/9704-ecommerce.json')}
+          /> */}
+
+          <Image style={{
+              width: 400,
+              height: 400,
+              backgroundColor: 'transparent',
+            }} source={require('../../../assets/animation_500_kl4ve6t6.gif')} />
+
+          
         </View>
       </View>
     );

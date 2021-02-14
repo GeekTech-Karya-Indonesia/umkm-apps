@@ -23,6 +23,13 @@ export const RecipeCard = StyleSheet.create({
     borderColor: '#cccccc',
     borderWidth: 0.5,
     borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10
+    },
+    shadowOpacity: .5,
+    shadowRadius: 20
   },
   photo: {
     width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
