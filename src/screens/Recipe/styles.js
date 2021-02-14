@@ -1,11 +1,18 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const { width: viewportWidth } = Dimensions.get('window');
+const { width: viewportWidth, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1
+  },
+  motionGraphic: {
+    position: 'absolute', 
+    top: 0, left: 0, 
+    right: 0, bottom: 0, 
+    justifyContent: 'center', 
+    alignItems: 'center'
   },
   carouselContainer: {
     minHeight: 250

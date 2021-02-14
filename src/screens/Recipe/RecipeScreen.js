@@ -19,6 +19,7 @@ import { Accordion, Block } from 'galio-framework';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline, AnimatedRegion  } from 'react-native-maps';
 const { width: viewportWidth } = Dimensions.get('window');
 import { AntDesign, Entypo, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import LottieView from 'lottie-react-native';
 import * as Permissions from 'expo-permissions'
 import polyline from '@mapbox/polyline'
 import * as Location from 'expo-location';
@@ -43,6 +44,7 @@ export default class RecipeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: true,
       activeSlide: 0,
       active: true,
       time: 'Sedang Menghitung...',
@@ -73,7 +75,7 @@ export default class RecipeScreen extends React.Component {
     }
     await Location.getCurrentPositionAsync({})
       .then(({ coords: { latitude, longitude } }) => this.setState({ latitude, longitude, status }, this.mergeCoords))
-      .catch(err => err)
+      .catch(err =>  this.setState({ distance: 'Aktifkan GPS untuk menghitung', time: 'Aktifkan GPS untuk menghitung', isLoading: false }))
     const { locations: [ sampleLocation ] } = this.state
     this.setState({
       desLatitude: sampleLocation.coords.latitude,
@@ -83,7 +85,13 @@ export default class RecipeScreen extends React.Component {
     this.descriptionAcordian()
   }
 
+  resetAnimation = () => {
+    this.animation.reset()
+    this.animation.play()
+  };
+
   async componentDidMount() {
+    this.animation.play()
     this.getLocationAsync()
   }
 
@@ -124,7 +132,7 @@ export default class RecipeScreen extends React.Component {
           longitude: point[1]
         }
       })
-      this.setState({ coords, distance, time })
+      this.setState({ coords, distance, time, isLoading: false })
     } catch(error) {
       console.log('Error: ', error)
     }
@@ -203,12 +211,26 @@ export default class RecipeScreen extends React.Component {
       coords,
       distance,
       latitude,
-      status
+      status,
+      isLoading
     } = this.state;
     const { navigation, route } = this.props;
     const { item } = route.params
     const category = getCategoryById(item.categoryId);
     const title = getCategoryName(category);
+    if(isLoading){
+      return (<View style={styles.motionGraphic}><LottieView
+        ref={animation => {
+          this.animation = animation;
+        }}
+        style={{
+          width: 400,
+          height: 400,
+          backgroundColor: 'transparent',
+        }}
+        source={require('../../../assets/animated_3.json')}
+      /></View>)
+    }
     return (
       <ScrollView style={styles.container}>
         <View style={styles.container}>
