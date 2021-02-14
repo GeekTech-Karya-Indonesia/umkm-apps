@@ -58,7 +58,7 @@ import styles from './styles';
     </Separator>
     <ListItem icon>
       <Left>
-          <AntDesign name="shield" size={24} color="#9932CC" />
+          <Entypo name="shield" size={24} color="#9932CC" />
       </Left>
       <Body>
         <Text>Kebijakan Privasi</Text>

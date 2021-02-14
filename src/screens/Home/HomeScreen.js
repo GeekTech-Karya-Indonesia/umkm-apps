@@ -255,7 +255,8 @@ export default class HomeScreen extends React.Component {
         <View style={{
           marginBottom: 320
         }}>
-        {/* <LottieView
+        {
+          isLoading ? (<LottieView
             ref={animation => {
               this.animation = animation;
             }}
@@ -264,16 +265,16 @@ export default class HomeScreen extends React.Component {
               height: 400,
               backgroundColor: 'transparent',
             }}
-            source={require('../../../assets/9704-ecommerce.json')}
-          /> */}
-
-          <Image style={{
-              width: 400,
-              height: 400,
-              backgroundColor: 'transparent',
-            }} source={require('../../../assets/animation_500_kl4ve6t6.gif')} />
-
-          
+            source={require('../../../assets/animated_3.json')}
+          />) : (<FlatList
+          vertical
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          data={recipes}
+          renderItem={this.renderRecipes}
+          keyExtractor={item => `${item.recipeId}`}
+        />)
+        }
         </View>
       </View>
     );

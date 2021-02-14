@@ -12,7 +12,9 @@ import {
 } from 'react-native';
 import styles from './styles';
 import * as Permissions from 'expo-permissions'
-import * as Location from 'expo-location';
+import * as Location from 'expo-location'
+import LottieView from 'lottie-react-native'
+import { Button } from 'galio-framework';
 
 export default class SplashScreen extends React.Component {
   constructor(props) {
@@ -41,8 +43,14 @@ export default class SplashScreen extends React.Component {
     }
   }
 
+  resetAnimation = () => {
+    this.animation.reset();
+    this.animation.play();
+  };
+
   async componentDidMount() {
     this.getLocationAsync()
+    this.animation.play()
   }
 
   onPermissionStatus = () => {
@@ -69,9 +77,22 @@ export default class SplashScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight onPress={this.onPermissionStatus}>
+          <LottieView
+            ref={animation => {
+              this.animation = animation;
+            }}
+            style={{
+              width: 400,
+              height: 400,
+              backgroundColor: 'transparent',
+            }}
+            source={require('../../../assets/animated_2.json')}
+          />
+        <Text>UMKM Kota Bekasi</Text>
         <Text>Versi 1.0.0</Text>
-        </TouchableHighlight>
+        <View style={styles.btnSubmit}>
+            <Button onPress={this.onPermissionStatus}>MASUK</Button>
+        </View>
       </View>
     );
   }

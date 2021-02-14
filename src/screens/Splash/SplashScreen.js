@@ -10,7 +10,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 import styles from './styles';
-
+import LottieView from 'lottie-react-native';
 export default class PermissionScreen extends React.Component {
   constructor(props) {
     super(props);
